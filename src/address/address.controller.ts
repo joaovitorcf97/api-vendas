@@ -1,12 +1,13 @@
 import { Body, Controller, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AddressService } from './address.service';
 import { CreateAddressDTO } from './dto/createAddress.dto';
-import { promises } from 'dns';
 import { AddressEntity } from './entities/address.entity';
 
 @Controller('address')
 export class AddressController {
-  constructor(private readonly addressService: AddressService) { }
+  constructor(
+    private readonly addressService: AddressService,
+  ) { }
 
   @Post('/:userId')
   @UsePipes(ValidationPipe)

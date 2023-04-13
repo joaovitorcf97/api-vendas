@@ -1,5 +1,5 @@
-import { AddressEntity } from "src/address/entities/address.entity";
-import { CityEntity } from "src/city/entities/city.entity";
+import { AddressEntity } from "../../address/entities/address.entity";
+import { CityEntity } from "../../city/entities/city.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'state' })

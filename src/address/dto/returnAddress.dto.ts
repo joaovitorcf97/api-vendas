@@ -1,6 +1,6 @@
 import { IsInt, IsOptional, IsString } from "class-validator";
 import { AddressEntity } from "../entities/address.entity";
-import { ReturnCityDTO } from "src/city/dto/returnCity.dto";
+import { ReturnCityDTO } from "../../city/dto/returnCity.dto";
 
 export class ReturnAddressDTO {
   complement: string

@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { CartService } from './cart.service';
-import { Roles } from 'src/decorators/roles.decorators';
-import { UserType } from 'src/user/enum/userType.enem';
+import { Roles } from '../decorators/roles.decorators';
+import { UserType } from '../user/enum/userType.enem';
 
 @Roles(UserType.User)
 @Controller('cart')

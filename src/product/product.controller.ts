@@ -23,11 +23,13 @@ export class ProductController {
 
   @Post()
   @UsePipes(ValidationPipe)
+  @Roles(UserType.Admin)
   async createProduct(@Body() createProduct: CreateProduct): Promise<ProductEntity> {
     return this.productService.createProduct(createProduct);
   }
 
   @Put('/:productId')
+  @Roles(UserType.Admin)
   @UsePipes(ValidationPipe)
   async updateProduct(
     @Body() updateProduct: UpdateProduct,
@@ -37,6 +39,7 @@ export class ProductController {
   }
 
   @Delete('/:productId')
+  @Roles(UserType.Admin)
   @UsePipes(ValidationPipe)
   async deleteProduct(@Param('productId') productId: number): Promise<DeleteResult> {
     return this.productService.deleteProduct(productId);

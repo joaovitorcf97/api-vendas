@@ -1,5 +1,5 @@
 import { CartProductEntity } from "src/cart-product/entities/cartProduct.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'cart' })
 export class CartEntity {
@@ -12,12 +12,12 @@ export class CartEntity {
   @Column({ name: 'active', nullable: false })
   active: boolean;
 
-  @Column({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @Column({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(() => CartProductEntity, (cardProduct) => cardProduct.cart)
+  @OneToMany(() => CartProductEntity, (cartProduct) => cartProduct.cart)
   cartProduct: CartProductEntity[];
 }

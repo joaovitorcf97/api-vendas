@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { UserEntity } from '../user/interfaces/user.entity';
+import { UserEntity } from '../user/entities/user.entity';
 import { LoginDTO } from './dto/login.dto';
 import { UserService } from '../user/user.service';
 import { compare } from 'bcrypt';

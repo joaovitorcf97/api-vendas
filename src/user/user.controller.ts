@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { createUserDTO } from './dto/createUser.dto';
 import { UserService } from './user.service';
-import { UserEntity } from './interfaces/user.entity';
+import { UserEntity } from './entities/user.entity';
 import { ReturnUserDTO } from './dto/returnUser.dto';
 import { UpdatePasswordDTO } from './dto/updatePassword.dto';
 import { UserId } from 'src/decorators/userId.decorator';

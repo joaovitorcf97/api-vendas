@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrderProductEntity } from './entities/orderProduct.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
+import { ReturnGroupOrderDTO } from './dto/returnGroupOrder.dto';
 
 @Injectable()
 export class OrderProductService {
@@ -22,5 +23,14 @@ export class OrderProductService {
       price,
       productId,
     });
+  }
+
+  async findAmountProductsByOrderId(orderId: number[]): Promise<ReturnGroupOrderDTO[]> {
+    return this.orderRepository.
+      createQueryBuilder('order_product')
+      .select('order_product.order_id, COUNT(*) as total')
+      .where('order_product.order_id IN (:...ids)', { ids: orderId })
+      .groupBy('order_product.order_id')
+      .getRawMany();
   }
 }

@@ -80,7 +80,11 @@ export class OrderService {
         id: orderId,
       },
       relations: {
-        address: true,
+        address: {
+          city: {
+            state: true,
+          }
+        },
         orderProduct: {
           product: true,
         },

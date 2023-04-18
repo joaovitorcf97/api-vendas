@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPi
 import { ProductService } from './product.service';
 import { Roles } from 'src/decorators/roles.decorators';
 import { UserType } from 'src/user/enum/userType.enem';
-import { ReturnProduct } from './dto/returnProduct';
+import { ReturnProductDTO } from './dto/returnProduct';
 import { ProductEntity } from './entities/product.entity';
 import { CreateProduct } from './dto/createProduct.dto';
 import { DeleteResult } from 'typeorm';
@@ -16,9 +16,9 @@ export class ProductController {
   ) { }
 
   @Get()
-  async findAll(): Promise<ReturnProduct[]> {
+  async findAll(): Promise<ReturnProductDTO[]> {
     return (await this.productService.findAll([], true))
-      .map((product) => new ReturnProduct(product))
+      .map((product) => new ReturnProductDTO(product))
   }
 
   @Post()

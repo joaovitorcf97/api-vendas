@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HostParam, Param, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Roles } from 'src/decorators/roles.decorators';
 import { UserType } from 'src/user/enum/userType.enem';
@@ -19,6 +19,13 @@ export class ProductController {
   @Get()
   async findAll(): Promise<ReturnProductDTO[]> {
     return (await this.productService.findAll([], true))
+      .map((product) => new ReturnProductDTO(product))
+  }
+
+  @Roles(UserType.Root, UserType.Admin, UserType.User)
+  @Get('/page')
+  async findAllPage(@Query('search') search: string): Promise<ReturnProductDTO[]> {
+    return (await this.productService.findAllPage(search))
       .map((product) => new ReturnProductDTO(product))
   }
 

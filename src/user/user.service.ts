@@ -14,7 +14,7 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>
   ) { }
 
-  async createUser(createUserDTO: createUserDTO): Promise<UserEntity> {
+  async createUser(createUserDTO: createUserDTO, userType?: number): Promise<UserEntity> {
     const user = await this.findUserByEmail(createUserDTO.email)
       .catch(() => undefined);
 
@@ -26,7 +26,7 @@ export class UserService {
 
     return this.userRepository.save({
       ...createUserDTO,
-      typeUser: UserType.User,
+      typeUser: userType ? userType : UserType.User,
       password: passwordHashed
     });
   }

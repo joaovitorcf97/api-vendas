@@ -6,7 +6,7 @@ import { UserType } from 'src/user/enum/userType.enem';
 import { CategoryEntity } from './entities/category.entity';
 import { CreateCategory } from './dto/createCategory.dto';
 
-@Roles(UserType.User, UserType.Admin)
+@Roles(UserType.User, UserType.Root, UserType.Admin)
 @Controller('category')
 export class CategoryController {
   constructor(
@@ -19,7 +19,7 @@ export class CategoryController {
   }
 
   @Post()
-  @Roles(UserType.Admin)
+  @Roles(UserType.Root, UserType.Admin)
   @UsePipes(ValidationPipe)
   async createCategory(@Body() createCategory: CreateCategory): Promise<CategoryEntity> {
     return this.categoryService.createCategory(createCategory);

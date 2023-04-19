@@ -9,7 +9,7 @@ import { ReturnCartDTO } from './dto/returnCart.dto';
 import { DeleteResult } from 'typeorm';
 import { UpdateCartDTO } from './dto/updateCart.dto';
 
-@Roles(UserType.User, UserType.Admin)
+@Roles(UserType.User, UserType.Root, UserType.Admin)
 @Controller('cart')
 export class CartController {
   constructor(

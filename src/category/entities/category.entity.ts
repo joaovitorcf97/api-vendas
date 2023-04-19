@@ -1,7 +1,7 @@
 import { ProductEntity } from "src/product/entities/product.entity";
-import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity({ name: 'category', schema: 'public' })
+@Entity({ name: 'category' })
 export class CategoryEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number;
@@ -15,6 +15,6 @@ export class CategoryEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @ManyToMany(() => ProductEntity, (product: ProductEntity) => product.category)
-  products: ProductEntity;
+  @OneToMany(() => ProductEntity, (product: ProductEntity) => product.category)
+  products?: ProductEntity[];
 }

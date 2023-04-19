@@ -22,6 +22,12 @@ export class ProductController {
       .map((product) => new ReturnProductDTO(product))
   }
 
+  @Roles(UserType.Root, UserType.Admin, UserType.User)
+  @Get('/:productId')
+  async findProductById(@Param('productId') productId: number): Promise<ReturnProductDTO> {
+    return this.productService.findProductById(productId, true)
+  }
+
   @Post()
   @UsePipes(ValidationPipe)
   @Roles(UserType.Root, UserType.Admin)

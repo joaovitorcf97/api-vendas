@@ -7,6 +7,7 @@ import { ProductEntity } from './entities/product.entity';
 import { CreateProduct } from './dto/createProduct.dto';
 import { DeleteResult } from 'typeorm';
 import { UpdateProduct } from './dto/updateProduct.dto';
+import { ReturnPriceDeliveryDTO } from './dto/returnPriceDelivery.dto';
 
 @Controller('product')
 export class ProductController {
@@ -14,6 +15,7 @@ export class ProductController {
     private readonly productService: ProductService
   ) { }
 
+  @Roles(UserType.Admin, UserType.User)
   @Get()
   async findAll(): Promise<ReturnProductDTO[]> {
     return (await this.productService.findAll([], true))
@@ -48,7 +50,7 @@ export class ProductController {
   async findPriceDelivery(
     @Param('productId') productId: number,
     @Param('cep') cep: string,
-  ): Promise<any> {
+  ): Promise<ReturnPriceDeliveryDTO> {
     return this.productService.findPriceDelivery(cep, productId);
   }
 }

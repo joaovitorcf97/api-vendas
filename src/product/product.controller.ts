@@ -8,7 +8,6 @@ import { CreateProduct } from './dto/createProduct.dto';
 import { DeleteResult } from 'typeorm';
 import { UpdateProduct } from './dto/updateProduct.dto';
 
-@Roles(UserType.User, UserType.Admin)
 @Controller('product')
 export class ProductController {
   constructor(
@@ -43,5 +42,13 @@ export class ProductController {
   @UsePipes(ValidationPipe)
   async deleteProduct(@Param('productId') productId: number): Promise<DeleteResult> {
     return this.productService.deleteProduct(productId);
+  }
+
+  @Get('/:productId/delivery/:cep')
+  async findPriceDelivery(
+    @Param('productId') productId: number,
+    @Param('cep') cep: string,
+  ): Promise<any> {
+    return this.productService.findPriceDelivery(cep, productId);
   }
 }

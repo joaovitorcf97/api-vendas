@@ -7,6 +7,8 @@ import { ReturnCepDTO } from './dto/returnCep.dto';
 import { CityEntity } from 'src/city/entities/city.entity';
 import { Client } from 'nestjs-soap';
 import { ResponsePriceCorreios } from './dto/responsePriceCorreios';
+import { CDFormatEnum } from './enums/cdFormat.enum';
+import { SizeProductDTO } from './dto/sizeProduct.dto';
 
 @Injectable()
 export class CorreiosService {
@@ -38,22 +40,26 @@ export class CorreiosService {
     return new ReturnCepDTO(returnCep, city?.id, city?.state?.id);
   }
 
-  async findPriceDelivery(): Promise<ResponsePriceCorreios> {
+  async findPriceDelivery(
+    cdService: string,
+    cep: string,
+    sizeProduct: SizeProductDTO
+  ): Promise<ResponsePriceCorreios> {
     return new Promise((resolve) => {
       this.soapClient.CalcPrecoPrazo({
-        nCdServico: '40010',
-        sCepOrigem: '22270010',
-        sCepDestino: '89010000',
-        nVlPeso: 2,
-        nCdFormato: 1,
-        nVlComprimento: 30,
-        nVlAltura: 30,
-        nVlLargura: 30,
-        nVlDiametro: 30,
+        nCdServico: cdService,
+        sCepOrigem: '01029010',
+        sCepDestino: cep,
+        nVlPeso: sizeProduct.weight,
+        nCdFormato: CDFormatEnum.BOX,
+        nVlComprimento: sizeProduct.length,
+        nVlAltura: sizeProduct.height,
+        nVlLargura: sizeProduct.width,
+        nVlDiametro: sizeProduct.diameter,
         nCdEmpresa: '',
         sDsSenha: '',
         sCdMaoPropria: 'N',
-        nVlValorDeclarado: 0,
+        nVlValorDeclarado: sizeProduct.productValue < 25 ? 0 : sizeProduct.productValue,
         sCdAvisoRecebimento: 'N',
       }, (_, res: ResponsePriceCorreios) => {
         if (res) {

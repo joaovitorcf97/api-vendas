@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserEntity } from '../user/entities/user.entity';
 import { LoginDTO } from './dto/login.dto';
 import { UserService } from '../user/user.service';
-import { compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ReturnLoginDTO } from './dto/returnLogin.dto';
 import { ReturnUserDTO } from '../user/dto/returnUser.dto';
@@ -21,15 +20,18 @@ export class AuthService {
       .findUserByEmail(login.email)
       .catch(() => undefined);
 
-    const isMatch = await validatePassword(login.password, user?.password || '');
+    const isMatch = await validatePassword(
+      login.password,
+      user?.password || '',
+    );
 
     if (!user || !isMatch) {
       throw new NotFoundException('E-mail or password envalid');
     }
 
     return {
-      acessToken: this.jwtService.sign({ ...new LoginPayload(user) }),
-      user: new ReturnUserDTO(user)
+      accessToken: this.jwtService.sign({ ...new LoginPayload(user) }),
+      user: new ReturnUserDTO(user),
     };
   }
 }
